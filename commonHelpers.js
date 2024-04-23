@@ -8,5 +8,5 @@ import"./assets/modulepreload-polyfill-3cfb730f.js";import{S as c}from"./assets/
                                 height = "200"
                             />
                         </a>
-                    </li>`,"");o.innerHTML=i}l(r,s);var h=new c(".gallery a",{captionSelector:"img",captions:!0,captionType:"attr",captionsData:"alt",captionPosition:"bottom",captionDelay:250,overlayOpacity:1,className:"custom-lightbox",docClose:!0,animationSpeed:500,fadeSpeed:500,rtl:!0});const g=document.querySelector("button");console.log(g);h.on("shown.simplelightbox",function(){const t=document.querySelectorAll("button"),o=document.querySelector(".sl-counter");t.forEach(i=>i.style.color="white"),o.style.color="white"});
+                    </li>`,"");o.innerHTML=i}l(r,s);var h=new c(".gallery a",{captionSelector:"img",captions:!0,captionType:"attr",captionsData:"alt",captionPosition:"bottom",captionDelay:250,overlayOpacity:1,className:"custom-lightbox",docClose:!0,animationSpeed:500,fadeSpeed:500,rtl:!0});document.querySelector("button");h.on("shown.simplelightbox",function(){const t=document.querySelectorAll("button"),o=document.querySelector(".sl-counter");t.forEach(i=>i.style.color="white"),o.style.color="white"});
 //# sourceMappingURL=commonHelpers.js.map
