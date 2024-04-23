@@ -1,14 +1,9 @@
 
-// import SimpleLightbox from ""
-// let gallerys = new SimpleLightbox('.gallery a');
-// gallerys.on('show.simplelightbox', function () {
-// 	// Do something…
-// });
 
-// import SimpleLightbox from "./simple-lightbox.esm"
+
 import SimpleLightbox from "../../node_modules/simplelightbox/dist/simple-lightbox.esm.js"
 import "../../node_modules/simplelightbox/dist/simple-lightbox.min.css";
-// import SimpleLightbox from "//node_modules/simple-lightbox.esm"
+
 const images = [
     {
       preview:
@@ -123,10 +118,7 @@ var lightbox = new SimpleLightbox('.gallery a', {
 
 
 const buttonArrow = document.querySelector("button")
-console.log(buttonArrow);
-// console.log(lightbox );
-lightbox.on('shown.simplelightbox', function () {
-  
+  lightbox.on('shown.simplelightbox', function () {
 	const buttons = document.querySelectorAll("button");
   const counter = document.querySelector(".sl-counter");
   buttons.forEach(value => value.style.color ="white");
