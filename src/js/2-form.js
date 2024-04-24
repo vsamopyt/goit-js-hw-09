@@ -3,24 +3,27 @@ const feedbackForm =document.querySelector(".feedback-form");
 const email = feedbackForm.elements.email;
 const text = feedbackForm.elements.message;
 
+let userData;
+
 function checkStorage () {
-    
-    if ((localStorage.getItem("feedback-form-state") === null) || (localStorage.getItem("feedback-form-state") === "undefined")) {
-        localStorage.removeItem("feedback-form-state");
-        const userData = {};
+    let  userData;
+    if ((localStorage.getItem("feedback-form-state") === null)) {
+        // localStorage.removeItem("feedback-form-state");
+        userData = {};
         return userData;
+      
     };
-    const userData = JSON.parse(localStorage.getItem("feedback-form-state"));
+     userData = JSON.parse(localStorage.getItem("feedback-form-state"));
 
     feedbackForm.elements.email.value = userData.email !== undefined ? userData.email : "";
     feedbackForm.elements.message.value = userData.text !== undefined ? userData.text : "";
-    return userData;
-
+    return userData; 
 }
 
-const userData = checkStorage () 
+userData = checkStorage () 
 
 function getUserData (userData, event) {
+    
     if(event.target.nodeName  !== "INPUT" && event.target.nodeName !== "TEXTAREA") { 
         return
     }
@@ -30,7 +33,6 @@ function getUserData (userData, event) {
     else if (event.target.nodeName  === "TEXTAREA") {
         userData.text =event.target.value.trim();
     }
-
     return userData;
 }
 
@@ -41,28 +43,27 @@ function saveToStorage (object) {
 
 
 feedbackForm.addEventListener("input", (event)=>{
-
+   
     const storDate = getUserData (userData, event);
     saveToStorage (storDate);
+    
  })
    
 
- feedbackForm.addEventListener("submit", (event)=>{
+ feedbackForm.addEventListener("submit", (event,)=>{
     event.preventDefault();
-    // const email = feedbackForm.elements.email;
-    // const text = feedbackForm.elements.message;
-    if(email.value === "" || text.value === "" ) {
-        alert("Заповніть будь ласка всі поля в формі")
+    console.log(text.value === "");
+    if(email.value.trim() === "" || text.value.trim() === '' ) {
+        alert("Fill please all fields")
         return
     }
 
-    const userData = JSON.parse(localStorage.getItem("feedback-form-state"));
+    userData = JSON.parse(localStorage.getItem("feedback-form-state"));
     console.log(userData);
-    // feedbackForm.elements.email.value = "";
-    // feedbackForm.elements.message.value = "";
     email.value = "";
     text.value = "";
-    localStorage.removeItem("feedback-form-state")
+    localStorage.removeItem("feedback-form-state");
+    userData = {};
 
  })
 
