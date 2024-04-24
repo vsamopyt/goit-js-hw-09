@@ -51,7 +51,6 @@ feedbackForm.addEventListener("input", (event)=>{
 
  feedbackForm.addEventListener("submit", (event,)=>{
     event.preventDefault();
-    console.log(text.value === "");
     if(email.value.trim() === "" || text.value.trim() === '' ) {
         alert("Fill please all fields")
         return
