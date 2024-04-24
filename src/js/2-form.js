@@ -8,7 +8,6 @@ let userData;
 function checkStorage () {
     let  userData;
     if ((localStorage.getItem("feedback-form-state") === null)) {
-        // localStorage.removeItem("feedback-form-state");
         userData = {};
         return userData;
       
@@ -46,7 +45,7 @@ feedbackForm.addEventListener("input", (event)=>{
    
     const storDate = getUserData (userData, event);
     saveToStorage (storDate);
-    
+
  })
    
 
