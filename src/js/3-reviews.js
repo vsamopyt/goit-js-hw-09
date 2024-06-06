@@ -19,16 +19,24 @@ const API = "https://portfolio-js.b.goit.study/api";
 
 // ------swiper------
 const slipper = new Swiper('.swiper',{
-    autoHeight: true,
-    slidesPerView: 1,
+    // autoHeight: true,
     breakpoints: {
-        // when window width is >= 320px
         1280: {
-            slidesPerView: 2,
-            spaceBetween: 32,
-            autoHeight: false,
-          }
-    },
+          slidesPerView: 2,
+          spaceBetween: 32,
+        },
+        768: {
+          slidesPerView: 1,
+          spaceBetween: 24,
+        },
+        360: {
+          slidesPerView: 1,
+          spaceBetween: 16,
+        },
+      },
+    
+    updateOnWindowResize: true,
+   
     navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',},
@@ -40,6 +48,9 @@ const slipper = new Swiper('.swiper',{
     mousewheel: {
         invert: true,
       },  
+
+      simulateTouch: true,
+      allowTouchMove: true,
 });
 
 //  ------HTTP request-------
@@ -66,11 +77,13 @@ slipper.on("reachEnd", ()=>{
 const createHtml = (users)=>{
     const revievHtml = users.reduce((acc, item, index)=>{
         return acc+= `<li class="swiper-slide">  
+                        <div class="item-container">
                            <p class="text-review">${item.review}</p>
                        <div class="icon-photo-name">
                            <img src=${item.avatar_url} alt="natalia" width="40" height="40"
                                class="avatar-icon" />
                            <p class="user-name-review">${item.author}</p>
+                       </div>
                        </div>
                        </li>`                
      },"");

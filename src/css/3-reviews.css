@@ -131,24 +131,35 @@ body {
     height:300px;
 } */
    .swiper {
-    padding: 32px;
+    /* padding: 32px; */
     width:100%;
+    height:296px;
     max-width: 320px; 
     overflow: visible;
   }
 
-  /* .swiper-autoheight {
-    height: auto;
-  } */
-  .swiper-slide {
-    /* position: relative; */
-    height: auto;
+  .item-container {
     padding: 32px;
-    /* width: 100%; */
+    height:296px;
+    /* padding: 32px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background: var(--light-gray-color);
     border-radius: 16px;
-    
-  } 
+  }
+
+
+  .text-review {
+    line-height: 1.5rem;
+    max-height: 10.5rem;
+    -webkit-box-orient: vertical;
+    display: block;
+    display: -webkit-box;
+    overflow: hidden!important;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 7;
+  }
 
   .swiper-button-next::after {
     display: none;
@@ -211,7 +222,7 @@ body {
     line-height: 1.5;
     letter-spacing: 0.03em;
     color: #292929;
-    margin-bottom: 24px;
+    /* margin-bottom: 24px; */
     /* margin-bottom: auto; */
   }
 
@@ -275,6 +286,11 @@ body {
     }
     .swiper {
         max-width: 704px;
+        height:224px;
+      }
+
+    .item-container {
+        height:224px;
       }
 
 
@@ -287,13 +303,17 @@ body {
 .swiper.mySwiper {
         max-width: 1240px;
         height: 224px;
-        display: flex;
+        /* display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: space-between; */
         /* height: 100%; */
       }
       
-.swiper .swiper-slide {
+      .item-container {
+        height:224px;
+        width: 592px;
+      }
+/* .swiper .swiper-slide {
         height: 224px;
         display: flex;
         flex-direction: column;
@@ -301,7 +321,7 @@ body {
      
        
         
-      } 
+      }  */
   
     .is-hidden {
       opacity: 1;
@@ -320,8 +340,6 @@ body {
     }
 
     .text-review {
-        /* margin-bottom:24px; */
-
         line-height: 1.5rem;
         max-height: 6rem;
         -webkit-box-orient: vertical;
@@ -330,8 +348,6 @@ body {
         overflow: hidden!important;
         text-overflow: ellipsis;
         -webkit-line-clamp: 4;
-
-
       }
 
   } 
