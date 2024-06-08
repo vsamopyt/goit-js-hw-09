@@ -2,81 +2,79 @@ import Swiper from 'swiper/bundle';
 // import styles bundle
 import 'swiper/css/bundle';
 
-import iziToast from "izitoast";
+import iziToast from 'izitoast';
 // Додатковий імпорт стилів
-import "izitoast/dist/css/iziToast.min.css";
+import 'izitoast/dist/css/iziToast.min.css';
 
 import axios from 'axios';
 
-import * as basicLightbox from 'basiclightbox'
+import * as basicLightbox from 'basiclightbox';
 
 // ======VARIABLE========
 
-const API = "https://portfolio-js.b.goit.study/api";
+const API = 'https://portfolio-js.b.goit.study/api';
 
 
 // ======FUNCTIONS======
 
 // ------swiper------
-const slipper = new Swiper('.swiper',{
-    // autoHeight: true,
-    breakpoints: {
-        1280: {
-          slidesPerView: 2,
-          spaceBetween: 32,
-        },
-        768: {
-          slidesPerView: 1,
-          spaceBetween: 24,
-        },
-        360: {
-          slidesPerView: 1,
-          spaceBetween: 16,
-        },
-      },
-    
-    updateOnWindowResize: true,
-   
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',},
+const slipper = new Swiper('.swiper', {
+  breakpoints: {
+    1280: {
+      slidesPerView: 2,
+      spaceBetween: 32,
+    },
+    768: {
+      slidesPerView: 1,
+      spaceBetween: 24,
+    },
+    360: {
+      slidesPerView: 1,
+      spaceBetween: 16,
+    },
+  },
 
-    keyboard: {
-        enabled: true,
-        onlyInViewport: false,
-      },
-    mousewheel: {
-        invert: true,
-      },  
+  updateOnWindowResize: true,
 
-      simulateTouch: true,
-      allowTouchMove: true,
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+
+  keyboard: {
+    enabled: true,
+    onlyInViewport: false,
+  },
+  mousewheel: {
+    invert: true,
+  },
+  simulateTouch: true,
+  allowTouchMove: true,
+ 
 });
+
 
 //  ------HTTP request-------
 const fetchReviews = async () => {
-	const response = await axios.get(`${API}/reviews`);
-	return response.data;
+  const response = await axios.get(`${API}/reviews`);
+  return response.data;
 };
 
+slipper.on('reachEnd', () => {
+  iziToast.show({
+    title: 'Hey',
+    message: 'It is end',
+    color: '#92929c37',
+    position: 'topRight',
+    timeout: 1500,
+  });
+});
 
-
-
-slipper.on("reachEnd", ()=>{ 
-    iziToast.show({
-        title: 'Hey',
-        message: 'It is end',
-        color: 'blue', 
-        position: 'topRight',
-        timeout: 1500,
-          
-})
-})
 
 //  -----create HTML ---------
-const createHtml = (users)=>{
-    const revievHtml = users.reduce((acc, item, index)=>{
-        return acc+= `<li class="swiper-slide">  
+const createHtml = users => {
+  const revievHtml = users.reduce((acc, item, index) => {
+    return (acc += `<li class="swiper-slide">  
                         <div class="item-container">
                            <p class="text-review">${item.review}</p>
                        <div class="icon-photo-name">
@@ -85,86 +83,84 @@ const createHtml = (users)=>{
                            <p class="user-name-review">${item.author}</p>
                        </div>
                        </div>
-                       </li>`                
-     },"");
+                       </li>`);
+  }, '');
 
-    return revievHtml;
-}
+  return revievHtml;
+};
 
-// ----temp----
-const  swiperSlide = document.querySelectorAll(".swiper-slide");
-console.log(swiperSlide.childNodes
-);
+
 //-----Modal window------
 
-const createModalWindow = (tag) => {
-
-    const reviewMessage = document.querySelectorAll(".text-review");
-    const reviewAuthor = document.querySelectorAll(".user-name-review");
-    const reviewAwatar = document.querySelectorAll(".avatar-icon");
-    console.log(reviewMessage);
-      reviewMessage.forEach((value,index) => {
-          console.log(value);
-      value.addEventListener("click", () => {const instance = basicLightbox.create(
-          `<div class="backdrop">
+const createModalWindow = tag => {
+  const reviewMessage = document.querySelectorAll('.text-review');
+  const reviewAuthor = document.querySelectorAll('.user-name-review');
+  const reviewAwatar = document.querySelectorAll('.avatar-icon');
+  console.log(reviewMessage);
+  reviewMessage.forEach((value, index) => {
+    console.log(value);
+    value.addEventListener('click', () => {
+      const instance = basicLightbox.create(
+        `<div class="backdrop">
                 <div class="modal">
+                <button type="button" class="modal-btn-close">
+                <svg class="icon-btn-close" width="16" height="16">
+                    <use href="./img/icons.svg#close-btn-modal-icon"></use>
+                </svg>
+                </button>
                      <p class="modal-text-review">${value.innerHTML}</p>
                      <div class="modal-icon-photo-name icon-photo-name">
                      <img src=${reviewAwatar[index].src} alt="natalia" width="40" height="40"
                          class="modal-avatar-icon avatar-icon" />
                      <p class="modal-user-name-review user-name-review">${reviewAuthor[index].innerHTML}</p>
                  </div>
-                     <a class="modal-link">Close</a>
+                    
                 </div>
-          </div>`,
-  
-          {onShow: (instance) => {
-                      instance.element().querySelector('a').onclick = instance.close
-                  }}
-      )
-      instance.show()
-      
-  })})
-}
+        </div>`,
+
+        {
+          onShow: instance => {
+
+            instance.element().querySelector('.modal-btn-close').onclick =
+              instance.close;
+
+            instance.element().querySelector('.backdrop').onclick = event => {
+              if (event.target.classList.value === 'backdrop') {
+                instance.close();
+              }
+            };
+
+            document.onkeydown = event => {
+              if (event.key === 'Escape') {
+                instance.close();
+              }
+            };
+          },
+        }
+
+      );
+      instance.show();
+    });
+  });
+};
+
 
 //--------Data Processing------
 
 const doStuff = async () => {
   try {
     const users = await fetchReviews();
-  console.log(users);
+    console.log(users);
 
-  document.querySelector(".swiper-wrapper").innerHTML = createHtml(users);
-  
+    document.querySelector('.swiper-wrapper').innerHTML = '';
+    document.querySelector('.swiper-wrapper').innerHTML = createHtml(users);
+    slipper.update();
 
-  createModalWindow(".text-review")
-
-
-
-//   const reviewMessage = document.querySelectorAll(".text-review");
-//   console.log(reviewMessage);
-//     reviewMessage.forEach(value => {
-//         console.log(value);
-//     value.addEventListener("click", () => {const instance = basicLightbox.create(
-//         `<div class="modal">
-//             <p>${value.innerHTML}</p>
-//             <a>Close</a>
-//         </div>`,
-
-//         {onShow: (instance) => {
-//                     instance.element().querySelector('a').onclick = instance.close
-//                 }}
-//     )
-//     instance.show()
-    
-// })})
-
-  
-} catch (error) {
+    createModalWindow('.text-review');
+  } catch (error) {
     console.log(error);
   }
 };
 
 const usr = doStuff();
-console.log(usr);
 
