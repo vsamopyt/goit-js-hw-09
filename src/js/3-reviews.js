@@ -14,10 +14,10 @@ import * as basicLightbox from 'basiclightbox';
 
 const API = 'https://portfolio-js.b.goit.study/api';
 
-
 // ======FUNCTIONS======
 
 // ------swiper------
+
 const slipper = new Swiper('.swiper', {
   breakpoints: {
     1280: {
@@ -50,45 +50,85 @@ const slipper = new Swiper('.swiper', {
   },
   simulateTouch: true,
   allowTouchMove: true,
- 
 });
 
-
 //  ------HTTP request-------
+
 const fetchReviews = async () => {
-  const response = await axios.get(`${API}/reviews`);
-  return response.data;
+  try {
+    const response = await axios.get(`${API}/reviews`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    iziToast.show({
+      title: 'Hey',
+      message: `${error}, for details look console.log`,
+      color: 'red',
+      position: 'topRight',
+      timeout: 5000,
+    });
+  }
+  //   const response = await axios.get(`${API}/reviews`);
+  //   console.log(response.data);
+  //   return response.data;
 };
 
 slipper.on('reachEnd', () => {
   iziToast.show({
     title: 'Hey',
     message: 'It is end',
-    color: '#92929c37',
+    color: '#e4e5e6',
     position: 'topRight',
     timeout: 1500,
   });
 });
 
-
 //  -----create HTML ---------
-const createHtml = users => {
-  const revievHtml = users.reduce((acc, item, index) => {
-    return (acc += `<li class="swiper-slide">  
-                        <div class="item-container">
-                           <p class="text-review">${item.review}</p>
-                       <div class="icon-photo-name">
-                           <img src=${item.avatar_url} alt="natalia" width="40" height="40"
-                               class="avatar-icon" />
-                           <p class="user-name-review">${item.author}</p>
-                       </div>
-                       </div>
-                       </li>`);
-  }, '');
 
-  return revievHtml;
+const createHtml =  users => {
+  try {
+    // const { review, avatar_url,author } = users;
+    const revievHtml =  users.reduce((acc, { review, avatar_url,author } , index) => {
+        
+        
+      return (acc += `<li class="swiper-slide">  
+                            <div class="item-container">
+                               <p class="text-review">${review}</p>
+                           <div class="icon-photo-name">
+                               <img src=${avatar_url} alt="natalia" width="40" height="40"
+                                   class="avatar-icon" />
+                               <p class="user-name-review">${author}</p>
+                           </div>
+                           </div>
+                           </li>`);
+    }, '');
+
+    return revievHtml;
+  } catch (error) {
+    console.log(error);
+    // console.log(error.message);
+    
+    iziToast.show({
+        title: 'Hey',
+        message: `${error}, for details look console.log`,
+        color: 'red',
+        position: 'topRight',
+        timeout: 5000,
+      });
+
+    return `<li class="swiper-slide">  
+                <div class="item-container">
+                    <p class="text-review"> No reveiws uploaded.</p> <p class="text-review"> Mistake ${error},for details look at console.log</p>          
+                </div>
+            </li>
+            <li class="swiper-slide">  
+                <div class="item-container">
+                    <p class="text-review">No reveiws uploaded look at the mistakes</p> 
+                </div>
+            </li>`;
+  }
 };
-
 
 //-----Modal window------
 
@@ -120,7 +160,6 @@ const createModalWindow = tag => {
 
         {
           onShow: instance => {
-
             instance.element().querySelector('.modal-btn-close').onclick =
               instance.close;
 
@@ -137,13 +176,11 @@ const createModalWindow = tag => {
             };
           },
         }
-
       );
       instance.show();
     });
   });
 };
-
 
 //--------Data Processing------
 
@@ -163,4 +200,3 @@ const doStuff = async () => {
 };
 
 const usr = doStuff();
-
